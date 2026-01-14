@@ -1,185 +1,62 @@
-# Diabetes Risk Prediction System
+# Diabetes Prediction using Machine Learning
 
-This project implements a machine learning system for predicting diabetes risk based on various health measurements. It includes a FastAPI backend and a user-friendly web frontend.
+This project predicts whether a person is likely to have diabetes based on basic medical information using machine learning.
 
-## Project Structure
-```
-diabetes-prediction/
-├── deployement_FastAPI/
-│   ├── main.py           # FastAPI backend
-│   └── input.py          # Sample API client
-├── frontend/
-│   └── index.html        # Web interface
-├── diabetes.csv          # Dataset
-├── diabetes3.py          # Original ML implementation
-├── algorithm_comparison.py # Algorithm comparison tool
-├── train_and_save_model.py # Model training script
-└── requirements.txt      # Python dependencies
-```
 
-## Prerequisites
-- Python 3.8 or higher
-- pip (Python package installer)
-- A modern web browser
+## Project Overview
 
-## Installation
+Diabetes is a common health condition that requires early detection.  
+In this project, machine learning models are trained to analyze patient data and predict the likelihood of diabetes.
 
-1. Clone or download the project repository
+The project focuses on:
+- Cleaning real-world medical data
+- Handling missing and incorrect values
+- Comparing different machine learning models
+- Saving a trained model for future predictions
 
-2. Create a virtual environment (recommended):
-```bash
-# Windows
-python -m venv .venv
-.venv\Scripts\activate
+## Dataset
 
-# Linux/Mac
-python3 -m venv .venv
-source .venv/bin/activate
-```
+The project uses the **PIMA Indians Diabetes Dataset**.
 
-3. Install required packages:
-```bash
-pip install -r requirements.txt
-```
+### Features Used:
+- Pregnancies  
+- Glucose  
+- Blood Pressure  
+- Skin Thickness  
+- Insulin  
+- BMI  
+- Diabetes Pedigree Function  
+- Age  
 
-## Project Workflow and Steps
+### Target:
+- **Outcome**
+  - `0` → Non-Diabetic  
+  - `1` → Diabetic  
 
-### 1. Data Preprocessing
-- Loading the PIMA Indians dataset
-- Handling missing values (replacing 0s with NaN)
-- Using KNNImputer for imputation
-- Data cleaning and validation
+Missing or zero values are handled using **KNN Imputation**, and the data is scaled for better model performance.
 
-### 2. Data Transformation
-- Standardizing features using QuantileTransformer
-- Normalizing data distributions
-- Handling skewed data
-- Feature scaling
 
-### 3. Feature Engineering
-- Feature selection using SelectKBest
-- Correlation analysis
-- Feature importance assessment
-- Dimensionality reduction
+## Models Used
 
-### 4. Model Training
-- Splitting data into training and testing sets
-- Implementing cross-validation
-- Training multiple models:
-  - Random Forest
-  - Extra Trees
-  - Gradient Boosting
-- Hyperparameter tuning
+- Random Forest  
+- Extra Trees  
+- Gradient Boosting  
 
-### 5. Model Evaluation
-- Calculating accuracy scores
-- Computing F1 scores
-- Generating confusion matrices
-- ROC curve analysis
-- Cross-validation scores
+To handle class imbalance, techniques like **SMOTE** and **SMOTEENN** were applied.
 
-### 6. Testing and Validation
-- Testing on unseen data
-- Performance comparison
-- Overfitting/underfitting analysis
-- Model generalization assessment
 
-## Running the Project
+## Results
 
-### 1. Train and Save the Model
-First, train the model and save it:
-```bash
-python train_and_save_model.py
-```
-This will create `diabetes_model_nb.sav` in your project directory.
+- Tree-based models performed better than basic classifiers
+- Oversampling techniques improved prediction for diabetic cases
+- Gradient Boosting and Random Forest showed stable and reliable performance
 
-### 2. Start the Backend Server
-Open a new terminal and run:
-```bash
-cd deployement_FastAPI
-python -m uvicorn main:app --reload --port 8002
-```
-The API will be available at http://127.0.0.1:8002
+The trained model is saved and can be reused for predictions.
+![diabetes result](result.png)
 
-### 3. Run the Frontend
-You can run the frontend in two ways:
-
-#### Option 1: Direct File Opening
-- Navigate to the `frontend` folder
-- Double-click `index.html` to open it in your browser
-
-#### Option 2: Using Python's HTTP Server
-```bash
-cd frontend
-python -m http.server 8000
-```
-Then open http://localhost:8000 in your browser
-
-## Using the Application
-
-1. Open the web interface in your browser
-2. Fill in the patient's health measurements:
-   - Number of Pregnancies
-   - Glucose Level (mg/dL)
-   - Blood Pressure (mm Hg)
-   - Skin Thickness (mm)
-   - Insulin Level (mu U/ml)
-   - BMI (kg/m²)
-   - Diabetes Pedigree Function
-   - Age (years)
-3. Click "Predict Risk"
-4. View the prediction result
-
-## API Endpoints
-
-### 1. Prediction Endpoint
-- URL: `http://127.0.0.1:8002/diabetes_prediction`
-- Method: POST
-- Input Format:
-```json
-{
-    "Pregnancies": 8,
-    "Glucose": 183,
-    "BloodPressure": 64,
-    "SkinThickness": 0,
-    "Insulin": 0,
-    "BMI": 23.3,
-    "DiabetesPedigreeFunction": 0.672,
-    "Age": 32
-}
-```
-
-### 2. Welcome Endpoint
-- URL: `http://127.0.0.1:8002/`
-- Method: GET
-- Returns a welcome message
-
-## Additional Tools
-
-### Algorithm Comparison
-To compare different machine learning algorithms and oversampling techniques:
-```bash
+## Usage
+'''bash
 python algorithm_comparison.py
-```
-This will show a comparison table of different algorithms and their performance metrics.
 
-## Troubleshooting
-
-1. If you get a "uvicorn not found" error:
-   - Make sure you've activated your virtual environment
-   - Try installing uvicorn separately: `pip install uvicorn`
-
-2. If the frontend can't connect to the backend:
-   - Ensure the backend server is running
-   - Check that you're using the correct port (8002)
-   - Verify CORS settings in main.py
-
-3. If you get a "model not found" error:
-   - Make sure you've run train_and_save_model.py first
-   - Check that diabetes_model_nb.sav exists in the correct location
-
-## Notes
-- The model is trained on the PIMA Indians dataset
-- The system uses Random Forest Classifier as the default model
-- The frontend includes input validation and error handling
-
+python diabetesprediction.py
+'''
