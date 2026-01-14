@@ -52,11 +52,12 @@ To handle class imbalance, techniques like **SMOTE** and **SMOTEENN** were appli
 - Gradient Boosting and Random Forest showed stable and reliable performance
 
 The trained model is saved and can be reused for predictions.
+
 ![diabetes result](result.png)
 
 ## Usage
-'''bash
+```bash
 python algorithm_comparison.py
 
 python diabetesprediction.py
-'''
+```
